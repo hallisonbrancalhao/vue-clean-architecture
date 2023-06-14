@@ -1,23 +1,23 @@
-# Clean Architecture
+# Arquitetura Limpa
 
-Simple TODO App showcasing a clean architecture approach in VueJs.
+Este é um exemplo simples de um aplicativo TODO que demonstra uma abordagem de arquitetura limpa em VueJs.
 
-Technologies used:
+Tecnologias usadas:
 
-- **VueJs** with **TypeScript**
-- **Vite** as Buildtool
-- **Vuex** for state management with **Vuex Module Decorators**
-- **Inversify** for dependency injection
-- **Tailwindcss** for a pretty and simple UI
-- **PurifyTs** for usage of Either in Usecases
+- **VueJs** com **TypeScript**
+- **Vite** como ferramenta de construção
+- **Vuex** para gerenciamento de estado com **Decoradores de Módulo Vuex**
+- **Inversify** para injeção de dependência
+- **Tailwindcss** para uma interface de usuário bonita e simples
+- **PurifyTs** para uso de Either nos casos de uso
 
-This project is seperated into 3 layers.
+Este projeto é dividido em 3 camadas.
 
-The package structure is **feature driven**.
-This means that for every feature, one package exists.
-In each feature, the 3 layers are represented as their own sub-packages.
+A estrutura do pacote é **orientada por recursos**.
+Isso significa que para cada recurso, existe um pacote.
+Em cada recurso, as 3 camadas são representadas como seus próprios sub-pacotes.
 
-In this case, there is only one feature 'todo', which handles creating, reading, updating and deleting todos.
+Neste caso, há apenas um recurso 'todo', que lida com a criação, leitura, atualização e exclusão de tarefas a serem feitas.
 
 ```
 ├── core
@@ -42,37 +42,57 @@ In this case, there is only one feature 'todo', which handles creating, reading,
 
 ## App
 
-The entrypoint, and most outer layer for the application.
-Includes all Vue specific code, such as .vue files, vuex configuration and their modules.
+O ponto de entrada e a camada mais externa para a aplicação.
+Inclui todo o código específico do Vue, como arquivos .vue, configuração do vuex e seus módulos.
 
-The entrypoint in a SPA is in this case the App.vue, which resides in the **core/app** package.
+O ponto de entrada em um SPA (Single Page Application) é, neste caso, o App.vue, que reside no pacote **core/app**.
 
 ### Store
 
-State-Management is handled by vuex, which in turn handles the communication to the domain, aka the usecases.
-Each feature is represented by its own module, therefore for the Todo Feature, a todoModule.ts exists.
+O gerenciamento de estado é feito pelo vuex, que por sua vez lida com a comunicação com o domínio, também conhecido como casos de uso.
+Cada recurso é representado por seu próprio módulo, portanto, para o recurso Todo, existe um todoModule.ts.
 
 ## Domain
 
-The inner layer containing all services to handle business logic, and business rules.
+A camada interna que contém todos os serviços para lidar com a lógica de negócios e as regras de negócios.
 
-The layer in itself is seperated into **model**, **ports** and **usecases**.
+A camada em si é dividida em **model**, **ports** e **usecases**.
 
 ### Model
 
-The representation of data retrieved in the ports, and used in the usecases.
+A representação dos dados recuperados nos ports e utilizados nos casos de uso.
 
 ### Port
 
-Or outer ports, are the port interfaces to communicate with the outside world (infrastructure).
-(Dependency inversion rule)
+Ou portas externas, são as interfaces de porta para se comunicar com o mundo externo (infraestrutura).
+(Regra de inversão de dependência)
 
 ### Usecases
 
-Or inner ports, defining the interfaces for the business logic, and business rules.
-Every usecase is implemented by it's service.
+Ou portas internas, definindo as interfaces para a lógica de negócios e as regras de negócios.
+Cada caso de uso é implementado por seu serviço.
 
 ## Infrastructure
 
-Framework specific code, and or implementation of the outer ports of the domain, to access the data of the "outer world".
-Most prominent example would be the layer to access some external server via http/s.
+Código específico do framework e/ou implementação das portas externas do domínio para acessar os dados do "mundo externo".
+O exemplo mais proeminente seria a camada para acessar algum servidor externo via http/s.
+
+---
+
+### Para simplificar:
+
+Imagine que você tem um aplicativo que precisa criar, ler, atualizar e excluir tarefas (conhecido como TODO). O VueJs é o framework principal que você está usando para criar esse aplicativo. Você também
+
+usa **TypeScript** para escrever seu código, o que fornece recursos de programação mais avançados e seguros do que o JavaScript padrão.
+
+O `Vite` é a ferramenta que você usa para construir (ou seja, compilar e empacotar) seu aplicativo. Vuex é a ferramenta que você usa para gerenciar o estado do seu aplicativo. Em outras palavras, Vuex ajuda você a manter o controle dos dados que estão sendo usados e modificados em seu aplicativo.
+
+`Inversify` é uma ferramenta que você usa para a injeção de dependência. Isso significa que ele ajuda a organizar seu código de maneira que diferentes partes de seu aplicativo possam trabalhar juntas de maneira mais eficiente.
+
+`PurifyTs` é uma biblioteca que você usa para implementar um padrão de programação chamado "Either". Esse padrão pode ajudá-lo a lidar com erros e situações imprevistas em seu código.
+
+Seu aplicativo é dividido em três "camadas": `App`, `Domain` e `Infrastructure`. A camada App é a parte mais externa do aplicativo, que lida com a interação do usuário e a exibição de informações na tela. A camada Domain é a parte interna do aplicativo que lida com a lógica de negócios. A camada Infrastructure é a parte do aplicativo que lida com a comunicação com o mundo exterior, como fazer solicitações de rede.
+
+Cada recurso (como a funcionalidade TODO) tem seu próprio pacote, que contém suas próprias subcamadas.
+
+Por exemplo, no caso do recurso TODO, a camada de `Model` (**features/todo/infrastructure/model**) representaria a estrutura de dados de uma tarefa, a camada de `Ports` (**features/todo/domain/ports**) seria responsável pela comunicação com o mundo exterior (como uma base de dados ou um serviço web) e a camada de `Use cases` (**features/todo/domain/usecases**) seria onde a lógica para criar, ler, atualizar e deletar uma tarefa seria implementada.
